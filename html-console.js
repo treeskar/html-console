@@ -152,7 +152,11 @@
 			}
 			let name = stdIn[1].toLowerCase().trim();
 			if ('object' === typeof this._commands[name]) {
-				this._commands[name].cmd(...stdIn[2].split(' '));
+				if ('-h' === stdIn[2].trim()) {
+					this.echo('<type:info>' + this._commands[name].help);
+				} else {
+					this._commands[name].cmd(...stdIn[2].split(' '));
+				}
 			} else {
 				this.echo(`<type:error> command "${name}" not found`);
 			}
