@@ -180,6 +180,7 @@
 			htmlConsole.echo(...arguments);
 		};
 
+		htmlConsole.addCommand('ip', getIp, 'print your external IP');
 		return htmlConsole;
 	}
 
@@ -220,4 +221,18 @@
 			this.echo(`${key} not found in DB`);
 		}
 	}
+	function getIp() {
+		let xhr = new XMLHttpRequest(),
+			self = this;
+		xhr.open('GET', 'https://api.ipify.org');
+		xhr.addEventListener('load', onGetIp);
+		xhr.send();
+		function onGetIp(e) {
+			if (200 === this.status) {
+				self.echo(this.responseText);
+			} else {
+				self.echo(`<type:error> ${this.status}: ${this.responseText}`);
+			}
+			xhr.removeEventListener('load', onGetIp);
+		}
 } ());
