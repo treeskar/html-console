@@ -172,14 +172,6 @@
 		// extend HTML Console commands
 		htmlConsole.addCommand('set', setItem, 'Set data in LocalStorage');
 		htmlConsole.addCommand('get', getItem, 'get data from LocalStorage');
-
-		// capture console log messages
-		let _log = window.console.log.bind(window.console);
-		window.console.log = function extendLog() {
-			_log(...arguments);
-			htmlConsole.echo(...arguments);
-		};
-
 		htmlConsole.addCommand('date', printDate, 'print current date and time');
 		htmlConsole.addCommand('ip', getIp, 'print your external IP');
 		return htmlConsole;
@@ -201,6 +193,7 @@
 		return msgObj;
 	}
 
+	// commands
 	function setItem(key, ...value) {
 		let _value = value.join(' ');
 		if ('string' !== typeof key || 0 === _value.length) {
@@ -239,4 +232,45 @@
 			}
 			xhr.removeEventListener('load', onGetIp);
 		}
+	}
+
+	// global error handling
+
+	let oldOnError = window.onerror;
+	window.onerror = onError;
+
+	function onError(message, file, line, column, err) {
+		if ('function' === typeof oldOnError) {
+			oldOnError(...arguments);
+		}
+		if(arguments.length < 2 && message === null) {
+			return;
+		}
+		if (message.toString().indexOf('Script error.') > -1) {
+			return;
+		}
+		let stack = 'No stack found, old browser or CORS on script tag missing...';
+		if(typeof err === 'undefined') {
+			err = message;
+		}
+		if(err && err.stack && typeof err.stack.toString === 'function') {
+			stack = err.stack.toString();
+		} else if(err && err.stack) {
+			stack = err.stack;
+		}
+
+		let msg = '<type:error>' + (message.toString === 'function' ? message.toString() : message);
+		consoles.forEach(console => console.echo(msg, '/n'+stack));
+	}
+
+	// capture console log messages
+	['log', 'error', 'warn'].forEach(caprureLog);
+	function caprureLog(type) {
+		let _log = window.console[type].bind(window.console);
+
+		window.console[type] = function extendLog() {
+			_log(...arguments);
+			consoles.forEach(console => console.echo(`<type:${type}>`, ...arguments));
+		};
+	}
 } ());
