@@ -180,6 +180,7 @@
 			htmlConsole.echo(...arguments);
 		};
 
+		htmlConsole.addCommand('date', printDate, 'print current date and time');
 		htmlConsole.addCommand('ip', getIp, 'print your external IP');
 		return htmlConsole;
 	}
@@ -220,6 +221,9 @@
 		} else {
 			this.echo(`${key} not found in DB`);
 		}
+	}
+	function printDate() {
+		this.echo(new Date().toString());
 	}
 	function getIp() {
 		let xhr = new XMLHttpRequest(),
