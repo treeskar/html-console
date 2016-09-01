@@ -148,8 +148,10 @@
 			let pattern = /^(\w+ ?)(.*)/;
 			let stdIn = this.input.value.match(pattern);
 			if(!stdIn) {
+				this.echo('');
 				return false;
 			}
+			this.echo('> ' + this.input.value);
 			let name = stdIn[1].toLowerCase().trim();
 			if ('object' === typeof this._commands[name]) {
 				if ('-h' === stdIn[2].trim()) {
@@ -187,7 +189,7 @@
 		return msgObj;
 	}
 	function setLogType(msgObj) {
-		let typePattern = /<type:(\w+)>/;
+		let typePattern = /<type:(\w+)> ?/;
 		let logClass = msgObj.text.match(typePattern);
 		if (!logClass) {
 			return msgObj;
