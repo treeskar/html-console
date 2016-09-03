@@ -1,5 +1,7 @@
 'use strict';
-
+import './index.scss';
+import 'imports?global=window!./html-console';
+import { PubSub } from './pub-sub';
 
 /*
 Supported API
@@ -18,76 +20,6 @@ trigger (eventName, data)
 	CHALLENGE 1 A : Please write the source code of “EventsManager” Object
 */
 
-class Channel {
-	constructor(name) {
-		this.name = name;
-		this.listeners = [];
-	}
-	addListener(cb, ctx={type: this.name}) {
-		this.listeners.push({cb, ctx});
-		return this.listeners.length;
-	}
-	removeListener(cb=null) {
-		if (!cb) {
-			this.listeners = [];
-		} else if ('function' === typeof cb) {
-			let index = this.listeners.findIndex(listener => listener.cb === cb);
-			if (index > -1) {
-				this.listeners = [...this.listeners.splice(0, index), ...this.listeners.splice(1)];
-			}
-		}
-		return this.listeners.length;
-	}
-	emit(arg) {
-		this.listeners.forEach(listeners => {
-			listeners.cb.call(listeners.ctx, ...arg);
-		});
-	}
-}
-
-class PubSub {
-	constructor() {
-		this.channels = {};
-	}
-	on(channelName, cb, ctx) {
-		if (Array.isArray(channelName)) {
-			return channelName.map(name => this.on(name, cb, ctx), this);
-		}
-		if ('string' !== typeof channelName || 'function' !== typeof cb) {
-			return null;
-		}
-		if ('undefined' === typeof this.channels[channelName]) {
-			// create new Channel
-			this.channels[channelName] = new Channel(channelName);
-		}
-		this.channels[channelName].addListener(cb, ctx);
-		return this.off.bind(this, channelName, cb);
-	}
-	off(channelName, cb) {
-		if (Array.isArray(channelName)) {
-			let res = channelName.map(name => this.off(name, cb), this);
-			return res.find(obj => obj === null)? null : this;
-		}
-		if ('string' !== typeof channelName || 'undefined' === typeof this.channels[channelName]) {
-			return null;
-		}
-		if (0 === this.channels[channelName].removeListener(cb)) {
-			delete this.channels[channelName];
-		}
-		return this;
-	}
-	trigger(channelName, ...args) {
-		if (Array.isArray(channelName)) {
-			let res = channelName.map(name => this.trigger(name, ...args), this);
-			return res.find(obj => obj === null)? null : this;
-		}
-		if ('string' !== typeof channelName || 'undefined' === typeof this.channels[channelName]) {
-			return null;
-		}
-		this.channels[channelName].emit(args);
-		return this;
-	}
-}
 
 function EventsManager() {
 	return new PubSub();
@@ -114,27 +46,27 @@ Person.prototype.waitToEat = function() {
 };
 
 Person.prototype.eat = function(foods) {
-	console.log("i'm", this.name, "and i'm eating", foods.join(","));
+	window.console.log("i'm", this.name, "and i'm eating", foods.join(","));
 	this.foods.length = 0;
 	this.foods = foods;
 	this.eventManager.trigger('eat:done', this);
 };
 
 Person.prototype.finishEat = function(time) {
-	console.log("i'm", this.name, "and i finished eating at", time);
+	window.console.log("i'm", this.name, "and i finished eating at", time);
 	this.eventManager.off("breakfast:ready", this.finishEat);
 };
 
 // logFood method has a task ahead
 Person.prototype.logFood = function() {
 	this.foods.forEach(function(item){
-		console.log("I'm " + this.name + " and I ate " + item);
+		window.console.log("I'm " + this.name + " and I ate " + item);
 	}, this);
 };
 
 Person.prototype.logFood = function() {
 	this.foods.forEach(function(item){
-		console.log("I'm " + this.name + " and I ate " + item);
+		window.console.log("I'm " + this.name + " and I ate " + item);
 	}, this);
 };
 
@@ -146,10 +78,10 @@ Person.prototype.logFood = function() {
 
 // start the app
 MyEventsManager.on('eat:done', function(person){
-	console.log(person.name, "finished eating");
+	window.console.log(person.name, "finished eating");
 });
 MyEventsManager.on('breakfast:ready', function(menu){
-	console.log("breakfast is ready with:", menu);
+	window.console.log("breakfast is ready with:", menu);
 });
 var john = new Person('john', MyEventsManager);
 john.waitToEat();
@@ -171,7 +103,7 @@ MyEventsManager.trigger('breakfast:ready', breakfast);
 Person.prototype.logFood = function() {
 	this.foods.forEach(function(item){
 		var msg = "I'm " + this.name + " and I ate " + item;
-		console.log(msg);
+		window.console.log(msg);
 	}, this);
 };
 /*
@@ -179,23 +111,27 @@ Person.prototype.logFood = function() {
 Person.prototype.logFood = function() {
 	var name = this.name;
 	this.foods.forEach(function(item){
-		console.log("I'm " + name + " and I ate " + item);
+		window.console.log("I'm " + name + " and I ate " + item);
 	});
 };
 
 // but there are many solutions to fix it
 Person.prototype.logFood = function() {
 	this.foods.forEach((item) => {
-		console.log("I'm " + this.name + " and I ate " + item);
+		window.console.log("I'm " + this.name + " and I ate " + item);
 	});
 };
 
 Person.prototype.logFood = function() {
 	this.foods.forEach(printLog.bind(this));
 	function printLog(item) {
-		console.log("I'm " + this.name + " and I ate " + item);
+		window.console.log("I'm " + this.name + " and I ate " + item);
 	}
 };
 */
 
 john.logFood();
+
+setTimeout(() => {
+	throw new Error('My Error');
+}, 3000);

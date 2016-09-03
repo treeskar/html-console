@@ -1,0 +1,31 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "settings": {
+    "react": {
+      "pragma": "React",  // Pragma to use, default to "React"
+      "version": "15.0" // React version, default to the latest React stable release
+    }
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "no-unused-vars": ["error", { "vars": "all", "args": "none" }]
+  },
+  "globals": {
+    "require": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "amd": true,
+    "commonjs": true
+  }
+}

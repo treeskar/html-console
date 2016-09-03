@@ -1,0 +1,51 @@
+{
+  "name": "html-console",
+  "version": "1.0.0",
+  "description": "HTML console",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "postinstall": "webpack --colors --progress",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "treeskar <treeskar@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.2.0",
+    "react-dom": "^15.2.0",
+    "react-redux": "^4.4.5"
+  },
+  "devDependencies": {
+    "assets-webpack-plugin": "^3.4.0",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-runtime": "^6.9.2",
+    "bundle-loader": "^0.5.4",
+    "compass-mixins": "^0.12.10",
+    "connect-history-api-fallback": "^1.2.0",
+    "css-loader": "^0.23.1",
+    "css-sourcemaps-webpack-plugin": "^1.0.3",
+    "eslint": "^3.0.0",
+    "eslint-loader": "^1.4.1",
+    "eslint-plugin-react": "^5.2.2",
+    "exports-loader": "^0.6.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "favicons-webpack-plugin": "0.0.7",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "imports-loader": "^0.6.5",
+    "node-sass": "^3.8.0",
+    "raw-loader": "^0.5.1",
+    "redux-devtools": "^3.3.1",
+    "rimraf": "^2.5.3",
+    "sass-loader": "^4.0.0",
+    "script-loader": "^0.7.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

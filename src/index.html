@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tikal Challenge</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <template id="console-template">
@@ -57,7 +55,7 @@
             margin: 0 10px;
         }
         .input-wrapper:before {
-            content: '>';
+            content: '#';
             display: block;
             position: absolute;
             top: 0;
@@ -93,9 +91,12 @@
         }
         /* Caret animation */
         @keyframes pulse {
-            0%  { background-color: rgba(255,255,255,0); }
+            0%, 100% { background-color: rgba(255,255,255,0); }
             50% { background-color: rgba(255,255,255,1); }
-            100% { background-color: rgba(255,255,255,1); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         .console-caret {
             position: absolute;
@@ -114,6 +115,15 @@
             border-color: transparent;
             animation: pulse 1s linear infinite;
         }
+        .console input[disabled] ~ .console-caret{
+            background-color: #eee;
+            border-color: transparent;
+            height: 2px;
+            top: 50%;
+            margin-left: 10px;
+            transform: rotate(0deg);
+            animation: rotate .5s linear infinite;
+        }
     </style>
     <form class="console">
         <label>
@@ -127,7 +137,5 @@
 </template>
 
 <console id="html-console"></console>
-<script src="html-console.js"></script>
-<script src="index.js"></script>
 </body>
 </html>
