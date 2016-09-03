@@ -43,7 +43,7 @@ function onError(message, file, line, column, err) {
 	}
 
 	let msg = '<type:error>' + (message.toString === 'function' ? message.toString() : message);
-	consoles.forEach(console => console.echo(msg, '/n'+stack));
+	consoles.forEach(console => console.echo(msg, '\n'+stack));
 }
 
 // capture console log messages

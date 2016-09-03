@@ -133,5 +133,5 @@ Person.prototype.logFood = function() {
 john.logFood();
 
 setTimeout(() => {
-	throw new Error('My Error');
+	throw new Error('Test error capturing');
 }, 3000);
