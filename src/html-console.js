@@ -2,7 +2,6 @@
 import { HTMLConsole } from './html-console-core';
 import { setLogType, appendTime, newLineSupport, tabSupport } from './html-console-decorators'
 import { setItem, getItem, removeItem, getIp, printDate } from './html-colnsole-commands';
-//import { window } from 'window';
 let consoles = Array.from(document.getElementsByTagName('console')).map(initiateConsole);
 
 function initiateConsole(console) {
@@ -47,8 +46,8 @@ function onError(message, file, line, column, err) {
 }
 
 // capture console log messages
-['log', 'error', 'warn'].forEach(caprureLog);
-function caprureLog(type) {
+['log', 'error', 'warn'].forEach(captureLog);
+function captureLog(type) {
 	let _log = window.console[type].bind(window.console);
 
 	window.console[type] = function extendLog() {
