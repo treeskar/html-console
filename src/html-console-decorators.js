@@ -9,6 +9,10 @@ function newLineSupport(msgObj) {
 	msgObj.text = msgObj.text.replace(/\\n/g, String.fromCharCode(10));
 	return msgObj;
 }
+function tabSupport(msgObj) {
+	msgObj.text = msgObj.text.replace(/\\t/g, String.fromCharCode(9));
+	return msgObj;
+}
 function setLogType(msgObj) {
 	let typePattern = /<type:(\w+)> ?/;
 	let logClass = msgObj.text.match(typePattern);
@@ -20,4 +24,4 @@ function setLogType(msgObj) {
 	return msgObj;
 }
 
-export {appendTime, setLogType, newLineSupport};
+export {appendTime, setLogType, newLineSupport, tabSupport};

@@ -1,6 +1,6 @@
 'use strict';
 import { HTMLConsole } from './html-console-core';
-import { setLogType, appendTime, newLineSupport } from './html-console-decorators'
+import { setLogType, appendTime, newLineSupport, tabSupport } from './html-console-decorators'
 import { setItem, getItem, removeItem, getIp, printDate } from './html-colnsole-commands';
 //import { window } from 'window';
 let consoles = Array.from(document.getElementsByTagName('console')).map(initiateConsole);
@@ -8,7 +8,7 @@ let consoles = Array.from(document.getElementsByTagName('console')).map(initiate
 function initiateConsole(console) {
 	let htmlConsole = new HTMLConsole(console, 'console-template');
 	// extend HTML Console message decorators
-	htmlConsole.decorators = htmlConsole.decorators.concat([setLogType, appendTime, newLineSupport]);
+	htmlConsole.decorators = htmlConsole.decorators.concat([setLogType, appendTime, newLineSupport, tabSupport]);
 	// extend HTML Console commands
 	htmlConsole.addCommand('set', setItem, 'Set data in LocalStorage');
 	htmlConsole.addCommand('get', getItem, 'get data from LocalStorage');
