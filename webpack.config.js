@@ -23,15 +23,15 @@ module.exports = {
 		index: ['./index'],
 		common: [
 			`webpack-dev-server/client?http://localhost:${PORT}/`,
-			'webpack/hot/only-dev-server'
-			//'react',
-			//'react-dom',
-			//'redux'
+			'webpack/hot/only-dev-server',
+			// 'react',
+			// 'react-dom',
+			// 'redux'
 		]
 	},
 	output: {
 		path: __dirname + '/build',
-		publicPath: '/build/',
+		publicPath: '',
 		filename: '[name].js?hash=[hash]',
 		chunkFilename: '[id].js?hash=[hash]',
 		sourceMapFilename: '[file].map?hash=[hash]',
