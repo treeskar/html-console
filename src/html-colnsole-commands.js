@@ -5,7 +5,7 @@ function setItem(key, ...value) {
 	if ('string' !== typeof key || 0 === _value.length) {
 		return `<type:error> command "set" to accept two params key and value`;
 	}
-	localStorage.setItem(key, value);
+	localStorage.setItem(key, _value);
 	return 'Ok';
 }
 function getItem(key) {
@@ -35,7 +35,6 @@ function printDate() {
 	return new Date().toString();
 }
 function getIp() {
-	let self = this;
 	return new Promise(_getIp);
 
 	function _getIp(resolve, reject) {
@@ -56,8 +55,6 @@ function getIp() {
 		}
 		function onError(error) {
 			reject(error);
-			// self.echo('<type:error>' + error);
-			// self.input.focus();
 			xhr.removeEventListener('load', onGetIp);
 			xhr.removeEventListener('error', onError);
 		}
