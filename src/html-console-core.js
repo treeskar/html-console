@@ -26,10 +26,10 @@ class HTMLConsole {
 		this.addCommand('clear', this.clear, 'clear screen');
 		this.addCommand('echo', this.echo, 'print message in console');
 		this.addCommand('help', this.help, 'print list of all supported commands');
-
+		this.onEval = this.onEval.bind(this);
 		this.updateCaretPosition = this.updateCaretPosition.bind(this);
 
-		this.validateNode('form').addEventListener('submit', this.onEval.bind(this));
+		this.validateNode('form').addEventListener('submit', this.onEval);
 		this.input.addEventListener('keydown', this.onKeyDown.bind(this));
 		this.input.addEventListener('keyup', this.updateCaretPosition);
 		window.addEventListener('resize', this.updateCaretPosition);
@@ -139,7 +139,7 @@ class HTMLConsole {
 		e.stopPropagation();
 		e.preventDefault();
 		let self = this,
-			pattern = /^(\w+ ?)(.*)/;
+			pattern = /^ *(\w+ ?)(.*)/;
 		let stdIn = this.input.value.match(pattern);
 		if(!stdIn) {
 			this.echo('');
