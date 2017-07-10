@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#fff"><meta name="application-name" content="HTML console"><link rel="icon" type="image/png" sizes="32x32" href="icons-a67bf9dd852815843343f010536a78e7/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="icons-a67bf9dd852815843343f010536a78e7/favicon-16x16.png"><link rel="shortcut icon" href="icons-a67bf9dd852815843343f010536a78e7/favicon.ico"><link href="index.css?hash=5f6b1d182db2f4eb2c866ce6e951d3ca" rel="stylesheet"></head>
+<body>
+<template id="console-template">
+    <style>
+        .console {
+            font-family: monospace;
+            font-size: 1em;
+            font-weight: 200;
+            color: #eee;
+            line-height: 1.3;
+            text-align: left;
+            background: #000;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .console label {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 10px 0;
+        }
+        .log-list {
+            list-style: none;
+            padding: 0 10px;
+            margin: 0;
+            font-size: 14px;
+            color: #eee;
+            line-height: 1.3;
+            overflow-y: auto;
+        }
+        .log-list pre {
+            background: none;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .log-list .error {
+            color: darkred;
+        }
+        .log-list .warn {
+            color: orange;
+        }
+        .log-list .info {
+            color: dodgerblue;
+        }
+        .input-wrapper {
+            position: relative;
+            margin: 0 10px;
+        }
+        .input-wrapper:before {
+            content: '#';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .input-wrapper:before,
+        .console input {
+            font-family: monospace;
+            font-weight: 200;
+            font-size: 14px;
+            color: inherit;
+            line-height: 2;
+        }
+        .console input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: none;
+            display: block;
+            box-sizing: border-box;
+            padding-left: 12px;
+            margin: 0;
+            width: 100%;
+            background: inherit;
+            color: transparent;
+            text-shadow: 0 0 0 #fff;
+            outline: none;
+        }
+        .console input::selection,
+        .log-list pre::selection {
+            color: #000;
+            background: #fff;
+        }
+        /* Caret animation */
+        @keyframes pulse {
+            0%, 100% { background-color: rgba(255,255,255,0); }
+            50% { background-color: rgba(255,255,255,1); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .console-caret {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            transform: translate(100%, -7px);
+            pointer-events: none;
+            box-sizing: border-box;
+            border: 1px solid #eee;
+            background-color: transparent;
+            width: 10px;
+            height: 3px;
+        }
+        .console input:focus ~ .console-caret{
+            background-color: #eee;
+            border-color: transparent;
+            animation: pulse 1s linear infinite;
+        }
+        .console input[disabled] ~ .console-caret{
+            background-color: #eee;
+            border-color: transparent;
+            height: 2px;
+            top: 50%;
+            margin-left: 10px;
+            transform: rotate(0deg);
+            animation: rotate .5s linear infinite;
+        }
+    </style>
+    <form class="console">
+        <label>
+            <ul class="log-list"></ul>
+            <div class="input-wrapper">
+                <input type="text" name="std-in" autocomplete="off"/>
+                <i class="console-caret"></i>
+            </div>
+        </label>
+    </form>
+</template>
+
+<console id="html-console"></console>
+<script type="text/javascript" src="common.js?hash=d19f1c6e0b8b3173a78b"></script><script type="text/javascript" src="index.js?hash=d19f1c6e0b8b3173a78b"></script></body>
+</html>
